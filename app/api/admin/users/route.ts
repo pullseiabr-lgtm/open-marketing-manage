@@ -6,13 +6,19 @@ import { NextRequest, NextResponse } from 'next/server'
 /** Verify the calling user is admin/superadmin via cookie-based client */
 async function getCallerRole(): Promise<string | null> {
   const cookieStore = await cookies()
+  type CookieToSet = {
+    name: string
+    value: string
+    options?: Parameters<typeof cookieStore.set>[2]
+  }
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: (cs) => cs.forEach(({ name, value, options }) => cookieStore.set(name, value, options)),
+        setAll: (cs: CookieToSet[]) =>
+          cs.forEach(({ name, value, options }) => cookieStore.set(name, value, options)),
       },
     }
   )

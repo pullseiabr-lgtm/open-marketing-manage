@@ -96,8 +96,21 @@ create policy "Superadmin gerencia role_permissions" on public.role_permissions
 -- ──────────────────────────────────────────────────────────
 -- ATUALIZAR PROFILES — adicionar superadmin e campos extras
 -- ──────────────────────────────────────────────────────────
+-- Remove CHECK antigo primeiro (001 aceitava só admin/operacional)
 alter table public.profiles
-  drop constraint if exists profiles_role_check,
+  drop constraint if exists profiles_role_check;
+
+-- Normaliza roles legadas antes de reforçar o CHECK
+update public.profiles
+set role = case
+  when role is null then 'operacional'
+  when lower(trim(role)) in ('superadmin', 'super_admin', 'super-admin') then 'superadmin'
+  when lower(trim(role)) in ('admin', 'administrador', 'administrator') then 'admin'
+  when lower(trim(role)) in ('operacional', 'operacao', 'operador', 'operator', 'user', 'usuario') then 'operacional'
+  else 'operacional'
+end;
+
+alter table public.profiles
   add constraint profiles_role_check check (role in ('superadmin','admin','operacional'));
 
 alter table public.profiles
