@@ -52,15 +52,16 @@ export default function Sidebar({ user }: { user: Profile | null }) {
   const { open, close } = useSidebar()
   const { data: cfg } = useConfig()
 
-  const isAdmin = user?.role === 'admin' || user?.role === 'superadmin'
+  const normalizedRole = String(user?.role ?? '').trim().toLowerCase()
+  const isAdmin = normalizedRole === 'admin' || normalizedRole === 'superadmin'
 
   const initials = user?.nome
     ? user.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()
     : 'OS'
 
   const roleLabel =
-    user?.role === 'superadmin' ? 'Super Admin' :
-    user?.role === 'admin'      ? 'Administrador' : 'Operacional'
+    normalizedRole === 'superadmin' ? 'Super Admin' :
+    normalizedRole === 'admin'      ? 'Administrador' : 'Operacional'
 
   const empresaNome   = cfg?.empresa_nome   ?? 'Open'
   const empresaSlogan = cfg?.empresa_slogan ?? 'Soluções Industriais'

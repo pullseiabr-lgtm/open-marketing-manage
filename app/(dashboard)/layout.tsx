@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import Sidebar from '@/components/layout/Sidebar'
 import Topbar from '@/components/layout/Topbar'
 import Providers from '@/components/Providers'
-import type { Configuracao } from '@/types'
+import type { Configuracao, Profile } from '@/types'
 
 /** Build a <style> block that overrides CSS vars from the DB config */
 function themeStyle(cfg: Configuracao | null): string {
@@ -51,6 +51,19 @@ export default async function DashboardLayout({ children }: { children: React.Re
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('configuracoes').select('*').single(),
   ])
+  const safeProfile: Profile | null = profile
+    ? profile
+    : {
+        id: user.id,
+        nome: (user.user_metadata?.nome as string | undefined) ?? user.email ?? 'Usuário',
+        email: user.email ?? null,
+        role: ((user.user_metadata?.role as string | undefined) ?? 'operacional') as Profile['role'],
+        is_active: true,
+        avatar_url: null,
+        last_login_at: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
 
   const theme = themeStyle(cfg)
 
@@ -61,7 +74,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <style dangerouslySetInnerHTML={{ __html: theme }} />
       )}
       <div className="app">
-        <Sidebar user={profile} />
+        <Sidebar user={safeProfile} />
         <main className="main">
           <Topbar />
           <div className="content">{children}</div>
