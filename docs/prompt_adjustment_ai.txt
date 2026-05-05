@@ -1,0 +1,87 @@
+**PROMPT DE OTIMIZAÇÃO DO SISTEMA:**
+
+> Foco principal: Evoluir o sistema existente sem quebrar as funcionalidades
+> Não deve mudar o Template e tema atual, bom como as paletas de cores e tipologias.
+> Você é um desenvolvedor full-stack sênior especializado em UX/UI e arquitetura de sistemas SaaS.
+> Sua tarefa é **evoluir um sistema existente**, adicionando novas funcionalidades e melhorando a experiência do usuário.
+>
+> ### 1. Nova seção: Métricas de Dados
+>
+> Crie um menu dentro de:
+> **Conteúdo & Vendas → Métricas de Dados**
+>
+> Essa seção deve conter os seguintes campos e indicadores:
+>
+> * Análise de seguidores
+> * Cliques
+> * Engajamento
+> * Quantidade de campanhas
+> * Alcance (seguidores vs não seguidores)
+>
+> **Requisitos:**
+>
+> * Apresentar os dados de forma visual (gráficos, cards ou dashboards)
+> * Garantir organização clara e leitura rápida
+> * Preparar estrutura para integração futura com APIs de dados
+>
+> ---
+>
+> ### 2. Área de Configuração (Settings)
+>
+> Criar uma seção de **Configurações** contendo:
+>
+> #### White Label:
+>
+> * Nome da empresa
+> * Upload de logo
+> * Cores primárias/secundárias (tema)
+> * Personalização de identidade visual
+>
+> ---
+>
+> ### 3. Gestão de Usuários e Perfis
+>
+> Criar um módulo completo de controle de acesso com:
+>
+> * Cadastro de usuários
+> * Perfis (Roles)
+> * Permissões (Permissions)
+>
+> **Requisitos:**
+>
+> * Sistema baseado em RBAC (Role-Based Access Control)
+> * Possibilidade de criar, editar e excluir perfis
+> * Associar permissões específicas a cada perfil
+> * Criar Perfis, papeis e permissões em área dedicada a isso (acesso default somente pelo Super ADM)
+> ---
+>
+> ### 4. Otimização para Mobile
+>
+> Adaptar todo o sistema para dispositivos móveis com:
+>
+> * Menu hambúrguer responsivo
+> * Layout mobile-first
+> * Componentes adaptáveis (cards, tabelas, gráficos)
+> * Melhor usabilidade em telas pequenas
+>
+> ---
+>
+> ### 5. Boas práticas obrigatórias
+>
+> * Interface moderna e limpa (UI/UX)
+> * Código escalável e modular
+> * Componentização (React, Vue ou similar, se aplicável)
+> * Responsividade total
+> * Performance otimizada
+>
+> ---
+>
+> ### 6. Entrega esperada
+>
+> * Estrutura das telas (wireframe ou descrição clara)
+> * Não recrie a estrutura do sistema do zero, você deve aplicar regras de CSS UI/UX e manter a funcionalidade
+> * Componentes necessários
+> * Fluxo de navegação do usuário
+>
+> Seja direto, técnico e proponha melhorias além do solicitado quando fizer sentido.
+

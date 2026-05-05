@@ -255,8 +255,102 @@ tr:hover td { background: var(--bk3); }
 .score-txt { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: var(--wh); font-family: var(--mono); }
 .score-lbl { font-size: 8.5px; color: var(--gr3); font-family: var(--f); font-weight: 400; }
 
+/* ── HAMBURGER ── */
+.ham-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--r);
+  border: 1px solid var(--bk4); background: var(--bk3);
+  color: var(--lgt); cursor: pointer; flex-shrink: 0;
+}
+.ham-btn:hover { background: var(--bk4); }
+
+/* ── SIDEBAR BACKDROP (mobile) ── */
+.sb-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 99;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile first breakpoint ≤ 800px
+   ══════════════════════════════════════════════════════════ */
 @media (max-width: 800px) {
-  .sidebar { display: none; }
+  /* ── layout ── */
   .main { margin-left: 0; }
-  .g11, .g2, .g3, .g4 { grid-template-columns: 1fr; }
+
+  /* ── sidebar: hidden off-screen, slide in when .sb-open ── */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    transition: transform .25s ease;
+    z-index: 200;
+  }
+  .sidebar.sb-open { transform: translateX(0); }
+  .sb-backdrop { display: block; }
+
+  /* ── topbar ── */
+  .ham-btn { display: flex; }
+  .tb-period { display: none; }          /* hide period selector to save space */
+  .tb-logout-txt { display: none; }      /* icon-only logout on very small screens */
+
+  /* ── grids ── */
+  .g2, .g3, .g4, .g11 { grid-template-columns: 1fr !important; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── content padding ── */
+  .content { padding: 12px 12px; }
+
+  /* ── cards ── */
+  .card-hd { flex-direction: column; align-items: flex-start; }
+
+  /* ── section header ── */
+  .sec-hd { flex-direction: column; align-items: flex-start; }
+
+  /* ── tables: horizontal scroll ── */
+  .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 560px; }
+
+  /* ── kanban: horizontal scroll ── */
+  .kanban { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 16px; }
+  .kb-col { min-width: 220px; }
+
+  /* ── modals: full-screen on mobile ── */
+  .ov { padding: 0; align-items: flex-end; }
+  .modal {
+    max-width: 100% !important; border-radius: 18px 18px 0 0;
+    max-height: 92vh; border-bottom: none;
+  }
+
+  /* ── tabs: wrap ── */
+  .tabs { width: 100%; flex-wrap: wrap; }
+  .tab-btn { flex: 1; text-align: center; }
+
+  /* ── funnel: label narrower ── */
+  .fn-nm { width: 70px; font-size: 9.5px; }
+
+  /* ── bar chart: narrower label ── */
+  .bc-lbl { width: 60px; font-size: 9.5px; }
+
+  /* ── toast: full width ── */
+  .toast { left: 12px; right: 12px; max-width: none; }
+
+  /* ── checklist grid ── */
+  .chk-grid { grid-template-columns: 1fr !important; }
+
+  /* ── pipeline forecast ── */
+  .pipe-forecast { flex-direction: column; }
+
+  /* ── touch targets ── */
+  .btn { min-height: 36px; }
+  .ib  { width: 32px; height: 32px; }
+}
+
+/* ── Extra small ≤ 480px ── */
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .kpi-v { font-size: 18px; }
+  .tb-title { font-size: 12px; }
+  .topbar { padding: 0 10px; gap: 8px; }
 }

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import Toast from './ui/Toast'
 import ConfirmDialog from './ui/ConfirmDialog'
+import { SidebarProvider } from './layout/SidebarContext'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -14,9 +15,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
-      <Toast />
-      <ConfirmDialog />
+      <SidebarProvider>
+        {children}
+        <Toast />
+        <ConfirmDialog />
+      </SidebarProvider>
     </QueryClientProvider>
   )
 }

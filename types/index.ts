@@ -2,12 +2,15 @@
 // Open Soluções — Tipos TypeScript
 // ══════════════════════════════════════════════════════════
 
-export type Role = 'admin' | 'operacional'
+export type Role = 'superadmin' | 'admin' | 'operacional'
 
 export interface Profile {
   id: string
   nome: string
+  email?: string | null
   role: Role
+  is_active?: boolean
+  last_login_at?: string | null
   avatar_url?: string | null
   created_at: string
   updated_at: string
@@ -335,3 +338,87 @@ export interface FunnelStage {
 }
 
 export type Periodo = 'mes' | 'sem' | 'tri' | 'ano'
+
+// ──────────────────────────────────────────────────────────
+// MÉTRICAS SOCIAIS
+// ──────────────────────────────────────────────────────────
+export interface MetricaSocial {
+  id: string
+  plataforma: string
+  periodo: string
+  seguidores_total: number
+  seguidores_novos: number
+  seguidores_perdidos: number
+  alcance_seguidores: number
+  alcance_nao_seguidores: number
+  impressoes: number
+  curtidas: number
+  comentarios: number
+  compartilhamentos: number
+  saves: number
+  cliques_link: number
+  cliques_perfil: number
+  campanhas_ativas: number
+  campanhas_total: number
+  visitas_perfil: number
+  stories_visualizacoes: number
+  observacoes?: string | null
+  created_by?: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type MetricaSocialInput = Omit<MetricaSocial, 'id' | 'created_by' | 'created_at' | 'updated_at'>
+
+// ──────────────────────────────────────────────────────────
+// CONFIGURAÇÕES (White Label)
+// ──────────────────────────────────────────────────────────
+export interface Configuracao {
+  id: string
+  empresa_nome: string
+  empresa_slogan?: string | null
+  logo_url?: string | null
+  cor_primaria: string
+  cor_primaria_hover: string
+  cor_primaria_bg: string
+  sidebar_bg: string
+  topbar_bg: string
+  favicon_url?: string | null
+  created_at: string
+  updated_at: string
+}
+
+// ──────────────────────────────────────────────────────────
+// RBAC — ROLES E PERMISSIONS
+// ──────────────────────────────────────────────────────────
+export interface RoleItem {
+  id: string
+  nome: string
+  descricao?: string | null
+  is_system: boolean
+  created_at: string
+  updated_at: string
+  permissions?: Permission[]
+}
+
+export interface Permission {
+  id: string
+  modulo: string
+  acao: string
+  descricao?: string | null
+}
+
+export interface RolePermission {
+  role_id: string
+  permission_id: string
+}
+
+// Módulos disponíveis para RBAC
+export const MODULOS = [
+  'exec','midia','campanhas','funil','resultados',
+  'estrategia','checklist','oculto','treinamento',
+  'integracao','organico','pipeline','metricas',
+  'usuarios','configuracoes',
+] as const
+
+export type Modulo = typeof MODULOS[number]
