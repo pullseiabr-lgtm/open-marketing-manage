@@ -22,6 +22,25 @@ function useConfig() {
   })
 }
 
+function useCurrentRole() {
+  return useQuery<string | null>({
+    queryKey: ['current-role'],
+    queryFn: async () => {
+      const { data: authData } = await supabase.auth.getUser()
+      const uid = authData.user?.id
+      if (!uid) return null
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', uid)
+        .single()
+      if (error) return null
+      return (data?.role as string | null) ?? null
+    },
+    staleTime: 60_000,
+  })
+}
+
 const NAV = [
   { sec: 'Análise & BI' },
   { href: '/',                label: 'Visão Executiva',           icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>' },
@@ -51,8 +70,9 @@ export default function Sidebar({ user }: { user: Profile | null }) {
   const pathname = usePathname()
   const { open, close } = useSidebar()
   const { data: cfg } = useConfig()
+  const { data: currentRole } = useCurrentRole()
 
-  const normalizedRole = String(user?.role ?? '').trim().toLowerCase()
+  const normalizedRole = String(currentRole ?? user?.role ?? '').trim().toLowerCase()
   const isAdmin = normalizedRole === 'admin' || normalizedRole === 'superadmin'
 
   const initials = user?.nome
